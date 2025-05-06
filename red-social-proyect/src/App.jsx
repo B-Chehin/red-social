@@ -1,10 +1,11 @@
-import { useState } from 'react'
-
+import { Header } from "./components/layout/general/Header"
 
 function App() {
 
   return (
-    <h1>Red Social</h1>
+    <div className='layout'>
+      <Header />
+    </div>
   )
 }
 
