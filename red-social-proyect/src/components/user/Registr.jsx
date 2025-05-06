@@ -1,7 +1,13 @@
-import React from 'react'
+import React from "react";
 
 export const Registr = () => {
   return (
-    <div>Registr</div>
-  )
-}
+    <>
+      <header className="navbar__header content__header--public">
+        <h1 className="content__title">Registro</h1>
+      </header>
+
+      <div className="content_posts"></div>
+    </>
+  );
+};
