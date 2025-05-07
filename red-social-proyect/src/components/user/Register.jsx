@@ -4,7 +4,7 @@ import { Global } from "../../helpers/Global";
 import { useState } from "react";
 
 export const Register = () => {
-  const { form, changed, setForm } = useForm({});
+  const { form, changed } = useForm({});
   const [saved, setSaved] = useState("not_sended");
 
   const saveUser = async (e) => {
@@ -38,8 +38,8 @@ export const Register = () => {
 
       <div className="content__posts">
 
-        <strong className="alert alert-success">{saved == "saved" ? "Usuario registrado correctamente" : ""}</strong>
-        <strong className="alert alert-danger">{saved == "error" ? "Error al registrar el usuario" : ""}</strong>
+      {saved === "saved" ? <strong className="alert alert-success">Usuario Registrado correctamente</strong> : ""}
+      {saved === "error" ? <strong className="alert alert-danger">Error al Registrar el usuario</strong> : ""}
         <form className="register-form" onSubmit={saveUser}>
           <div className="form-group">
             <label htmlFor="name">Nombre</label>
