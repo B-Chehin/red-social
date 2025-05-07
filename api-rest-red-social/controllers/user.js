@@ -80,9 +80,9 @@ const register = async (req, res) => {
 
     if (users && users.length >= 1) {
       console.log("Usuario duplicado");
-      return res.status(200).send({
+      return res.status(400).send({
         message: "Usuario ya existe",
-        status: "success",
+        status: "error",
       });
     }
 
