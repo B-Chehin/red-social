@@ -2,9 +2,10 @@ import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { PublicLayout } from '../components/layout/public/PublicLayout'
 import { Login } from '../components/user/Login'
-import { Registr } from '../components/user/Registr'
+import { Registr } from '../components/user/Register'
 import { Feed } from '../components/publication/Feed'
 import { PrivateLayout } from '../components/layout/private/PrivateLayout'
+import { Error } from '../components/layout/public/Error'
 
 export const Routing = () => {
   return (
@@ -25,6 +26,7 @@ export const Routing = () => {
 
         </Route>
 
+        <Route path="*" element={<Error />} />
 
         
         
