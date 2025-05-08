@@ -495,3 +495,14 @@ button{
     color: white;
 }
 
+.cargando{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cargando__title{
+    font-size: 2rem;
+}
