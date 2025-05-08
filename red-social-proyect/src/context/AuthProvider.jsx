@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [auth, setAuth] = useState({});
+  const [counters, setCounters] = useState({});
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -40,16 +41,25 @@ export const AuthProvider = ({children}) => {
     if (data.status !== "success") {
       return false;
     }
-    // Peticion ajax al backend que compruebe el token
-    // que me devuelva todos los datos del susuarios
+    
+    const requestCounters = await fetch(`${Global.url}user/counters/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    });
 
-    // Setear el estado de auth
+    const dataCounters = await requestCounters.json();
+
+    // Setear el estado de auth y counters
     setAuth(data.user);
+    setCounters(dataCounters.counters);
   }
 
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth}}>
+    <AuthContext.Provider value={{ auth, setAuth, counters, setCounters}}>
       {children}
     </AuthContext.Provider>
   )
