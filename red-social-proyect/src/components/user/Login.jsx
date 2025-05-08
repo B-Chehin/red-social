@@ -1,5 +1,5 @@
 import React from 'react'
-import { useForm } from '../../hooks/useForm'
+import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
 import { useState } from 'react';
 
@@ -28,7 +28,7 @@ export const Login = () => {
     }else{
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      setLogin("login");
+      setLogin("login");  
     }
 
   };
