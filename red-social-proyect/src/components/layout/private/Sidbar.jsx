@@ -1,7 +1,7 @@
 import React from 'react'
-import { useAuth } from '../../../context/AuthProvider';
-import Global from '../../../config/Global';
-import avatar from '../../../assets/avatar.png';
+import useAuth from '../../../hooks/useAuth';
+import { Global } from '../../../helpers/Global';
+import avatar from '../../../assets/img/user.png';
 
 export const Sidbar = () => {
 
@@ -35,13 +35,13 @@ export const Sidbar = () => {
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Siguiendo</span>
-                                <span className="following__number">{counters.following}</span>
+                                <span className="following__number">{!counters ? 0 : counters.following}</span>
                             </a>
                         </div>
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Seguidores</span>
-                                <span className="following__number">{counters.followers}</span>
+                                <span className="following__number">{!counters ? 0 : counters.followers}</span>
                             </a>
                         </div>
 
@@ -49,7 +49,7 @@ export const Sidbar = () => {
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Publicaciones</span>
-                                <span className="following__number">{counters.posts}</span>
+                                <span className="following__number">{!counters ? 0 : counters.posts}</span>
                             </a>
                         </div>
 

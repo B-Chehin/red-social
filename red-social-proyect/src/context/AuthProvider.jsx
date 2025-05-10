@@ -1,8 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
-import Global from '../config/Global';
+import { Global } from '../helpers/Global';
 
-
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [auth, setAuth] = useState({});
@@ -23,6 +22,7 @@ export const AuthProvider = ({children}) => {
     const token = localStorage.getItem('token');
 
     if (!user || !token) {
+      setLoading(false)
       return false;
     }
 

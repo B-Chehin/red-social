@@ -2,7 +2,7 @@ import React from "react";
 import { Header } from "./Header";
 import { Outlet } from "react-router-dom";
 import { Sidbar } from "./Sidbar";
-import { useAuth } from "../context/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 
 
@@ -23,6 +23,7 @@ export const PrivateLayout = () => {
 
         {/**Contenido principal */}
         <section className="layout__container">
+          {console.log(auth)}
           {auth._id ? <Outlet /> : <Navigate to="/login" />}
         </section>
 
