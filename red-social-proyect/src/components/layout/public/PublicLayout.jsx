@@ -14,7 +14,7 @@ export const PublicLayout = () => {
 
       {/**Contenido principal */}
       <section className="layout__container">
-        {auth._id ? <Outlet /> : <Navigate to="/social" />}
+        {auth._id ? <Navigate to="/social" /> : <Outlet />}
       </section>
     </>
   );

@@ -39,8 +39,8 @@ export const Login = () => {
 
       // Redireccion
       setTimeout(() => {
-        Window.location.reload();
-      }, 2000);
+        window.location.reload();
+      }, 1000);
     }
 
   };

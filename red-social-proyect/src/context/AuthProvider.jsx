@@ -10,10 +10,7 @@ export const AuthProvider = ({children}) => {
 
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      authUser();
-    }
+    authUser();
   }, []);
   
   const authUser = async () => {
@@ -51,18 +48,21 @@ export const AuthProvider = ({children}) => {
         "Authorization": token,
       },
     });
+    console.log(requestCounters);
+    console.log(userId);
+    
 
     const dataCounters = await requestCounters.json();
 
     // Setear el estado de auth y counters
     setAuth(data.user);
-    setCounters(dataCounters.counters);
+    setCounters(dataCounters);
     setLoading(false);
   }
 
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, counters, setCounters, loading, setLoading}}>
+    <AuthContext.Provider value={{ auth, setAuth, counters, setCounters, loading}}>
       {children}
     </AuthContext.Provider>
   )

@@ -7,6 +7,8 @@ export const Sidbar = () => {
 
     const { auth, counters } = useAuth();
 
+    console.log(counters);
+
   return (
     <aside className="layout__aside">
 
@@ -35,13 +37,13 @@ export const Sidbar = () => {
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Siguiendo</span>
-                                <span className="following__number">{!counters ? 0 : counters.following}</span>
+                                <span className="following__number">{counters.following}</span>
                             </a>
                         </div>
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Seguidores</span>
-                                <span className="following__number">{!counters ? 0 : counters.followers}</span>
+                                <span className="following__number">{counters.followers}</span>
                             </a>
                         </div>
 
@@ -49,7 +51,7 @@ export const Sidbar = () => {
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Publicaciones</span>
-                                <span className="following__number">{!counters ? 0 : counters.posts}</span>
+                                <span className="following__number">{counters.posts}</span>
                             </a>
                         </div>
 
@@ -63,16 +65,16 @@ export const Sidbar = () => {
                     <form className="container-form__form-post">
 
                         <div className="form-post__inputs">
-                            <label htmlfor="post" className="form-post__label">¿Que estas pesando hoy?</label>
+                            <label htmlFor="post" className="form-post__label">¿Que estas pesando hoy?</label>
                             <textarea name="post" className="form-post__textarea"></textarea>
                         </div>
 
                         <div className="form-post__inputs">
-                            <label htmlfor="image" className="form-post__label">Sube tu foto</label>
-                            <input type="file" name="image" class="form-post__image" />
+                            <label htmlFor="image" className="form-post__label">Sube tu foto</label>
+                            <input type="file" name="image" className="form-post__image" />
                         </div>
 
-                        <input type="submit" value="Enviar" class="form-post__btn-submit" disabled />
+                        <input type="submit" value="Enviar" className="form-post__btn-submit" disabled />
 
                     </form>
 
