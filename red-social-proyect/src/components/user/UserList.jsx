@@ -1,35 +1,47 @@
-import React from 'react'
+import React from "react";
 import { Global } from "../../helpers/Global";
 import { PostFollow } from "../servicies/follow/PostFollow";
 import { PostUnfollow } from "../servicies/follow/PostUnfollow";
-import { useAuth } from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import avatar from "../../assets/img/user.png";
 
-export const UserList = ({users, setUsers, following, setFollowing}) => {
+export const UserList = ({
+  users,
+  getUsers,
+  following,
+  setFollowing,
+  loading,
+  more,
+  page,
+  setPage,
+}) => {
+  const { auth } = useAuth();
 
-    
-    const { auth } = useAuth();
+  const follow = async (id) => {
+    const data = await PostFollow(id);
 
+    if (data.status == "success") {
+      setFollowing([...following, id]);
+    }
+  };
 
+  const unfollow = async (id) => {
+    const data = await PostUnfollow(id);
 
-  
-    const follow = async (id) => {
-        const data = await PostFollow(id);
-    
-        if (data.status == "success") {
-          setFollowing([...following, id]);
-        }
-      };
-    
-      const unfollow = async (id) => {
-        const data = await PostUnfollow(id);
-    
-        if (data.status == "success") {
-          setFollowing(following.filter((followedId) => followedId !== id));
-        }
-      };  
+    if (data.status == "success") {
+      setFollowing(following.filter((followedId) => followedId !== id));
+    }
+  };
+
+  const nextPage = () => {
+    let next = page + 1;
+    setPage(next);
+    getUsers(next);
+    console.log(following);
+  };
   return (
-    <div className="content__posts">
+    <>
+      <div className="content__posts">
         {users.length > 0 ? (
           users.map((user) => (
             <article className="posts__post" key={user._id}>
@@ -72,7 +84,8 @@ export const UserList = ({users, setUsers, following, setFollowing}) => {
                 ""
               ) : (
                 <div className="post__buttons">
-                  {following.includes(user._id) ? (
+                  { following &&
+                  following.includes(user._id) ? (
                     <a
                       href="#"
                       className="post__button"
@@ -97,5 +110,16 @@ export const UserList = ({users, setUsers, following, setFollowing}) => {
           <p>No hay usuarios</p>
         )}
       </div>
-  )
-}
+
+      {loading && <p>Cargando...</p>}
+
+      {more && (
+        <div className="content__container-btn">
+          <button className="content__btn-more-post" onClick={nextPage}>
+            Ver mas personas
+          </button>
+        </div>
+      )}
+    </>
+  );
+};

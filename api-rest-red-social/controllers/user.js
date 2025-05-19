@@ -12,8 +12,9 @@ const User = require("../models/user");
 const jwt = require("../services/jwt");
 const followService = require("../services/followUsersIds");
 const follow = require("../models/follow");
+const Publication = require("../models/publication");
 
-// Acciones de prueba
+
 const counters = async (req, res) => {
 
   let userIdentity = req.user.id;
@@ -24,11 +25,9 @@ const counters = async (req, res) => {
 
   
   try{
-    const following = await follow.count({"user": userIdentity});
-
-    const followed = await follow.count({"followed": userIdentity});
-
-    const publications = await Publication.count({"user": userIdentity});
+    const following = await follow.countDocuments({ user: userIdentity });
+    const followed = await follow.countDocuments({ followed: userIdentity });
+    const publications = await Publication.countDocuments({ user: userIdentity });
 
     return res.status(200).send({
       userIdentity,

@@ -2,6 +2,7 @@ import React from 'react'
 import useAuth from '../../../hooks/useAuth';
 import { Global } from '../../../helpers/Global';
 import avatar from '../../../assets/img/user.png';
+import { Link } from 'react-router-dom';
 
 export const Sidbar = () => {
 
@@ -35,23 +36,23 @@ export const Sidbar = () => {
                     <div className="profile-info__stats">
 
                         <div className="stats__following">
-                            <a href="#" className="following__link">
+                            <Link to={`/social/siguiendo/${auth._id}`} className="following__link">
                                 <span className="following__title">Siguiendo</span>
                                 <span className="following__number">{counters.following}</span>
-                            </a>
+                            </Link>
                         </div>
                         <div className="stats__following">
-                            <a href="#" className="following__link">
+                            <Link to={`/social/seguidores/${auth._id}`} className="following__link">
                                 <span className="following__title">Seguidores</span>
-                                <span className="following__number">{counters.followers}</span>
-                            </a>
+                                <span className="following__number">{counters.followed}</span>
+                            </Link>
                         </div>
 
 
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Publicaciones</span>
-                                <span className="following__number">{counters.posts}</span>
+                                <span className="following__number">{counters.publications}</span>
                             </a>
                         </div>
 

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import GetUserList from "../servicies/user/GetUserList";
-import {UserList} from "./UserList";
+import {UserList} from "../user/UserList";
+import {GetFollowers} from "../servicies/follow/GetFollowers";
 
-export const People = () => {
+
+export const Followers = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [more, setMore] = useState(true);
@@ -19,15 +20,15 @@ export const People = () => {
     setLoading(true);
 
     // Peticion para sacar usuarios
-    const data = await GetUserList(nextPage);
+    const data = await GetFollowers(nextPage);
 
     // Estado para listarlos
 
-    if (data.users && data.status == "success") {
-      let newUsers = data.users;
+    if (data.follows && data.status == "success") {
+      let newUsers = data.follows;
 
       if (users.length > 0) {
-        newUsers = [...users, ...data.users];
+        newUsers = [...users, ...data.follows];
       }
       setUsers(newUsers);
       setFollowing(data.user_following);

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Global } from "../../helpers/Global";
+import { Global} from "../../../helpers/Global";
 
 export const PostUnfollow = async (id) => {
     const token = localStorage.getItem("token");
@@ -12,4 +12,6 @@ export const PostUnfollow = async (id) => {
         },
       });
       const data = await request.json();
+
+      return data;
 }

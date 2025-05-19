@@ -1,5 +1,5 @@
 import React from 'react'
-import { Global } from '../helpers/Global'
+import { Global } from '../../../helpers/Global'
 
 const GetUserList = async (nextPage = 1) => {
     const token = localStorage.getItem("token");

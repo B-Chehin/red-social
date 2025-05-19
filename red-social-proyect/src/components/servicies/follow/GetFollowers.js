@@ -1,16 +1,15 @@
 import React from 'react'
 import { Global } from "../../../helpers/Global";
 
-export const PostFollow = async (id) => {
+export const GetFollowers = async (id, nextPage = 1) => {
     const token = localStorage.getItem("token");
     
-    const request = await fetch(`${Global.url}follow/save`, {
-          method: "POST",
+    const request = await fetch(`${Global.url}follow/followers/${id}/page=${nextPage}`, {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: token,
           },
-          body: JSON.stringify({ followed: id }),
         });
         const data = await request.json();
 
