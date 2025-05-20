@@ -41,6 +41,7 @@ export const Profile = () => {
   useEffect(() => {
     getUserProfile();
     getCounters();
+    setMore(true);
     getPublications(1, true);
   }, [params]);
 
@@ -69,8 +70,10 @@ export const Profile = () => {
       setPublications([...publications, ...data.publications]);
     }else if(newProfile){
       setPublications(data.publications);
+      setMore(true);
+      setPage(1);
     }
-    if(publications.length >= data.total - data.publications.length){
+    if(!newProfile && publications.length >= data.total - data.publications.length){
       setMore(false);
     }    
 
