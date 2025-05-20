@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import GetUserList from "../servicies/user/GetUserList";
-import {UserList} from "./UserList";
+import { UserList } from "./UserList";
 
 export const People = () => {
   const [users, setUsers] = useState([]);
@@ -14,30 +14,26 @@ export const People = () => {
     getUsers(1);
   }, []);
 
-  const getUsers = async (nextPage = 1) => {
-    // Efecto de carga
+  const getUsers = async (nextPage = page) => {
+    if (!more) return;
+
     setLoading(true);
 
-    // Peticion para sacar usuarios
     const data = await GetUserList(nextPage);
 
-    // Estado para listarlos
-
-    if (data.users && data.status == "success") {
-      let newUsers = data.users;
-
-      if (users.length > 0) {
-        newUsers = [...users, ...data.users];
-      }
+    if (data.users && data.status === "success") {
+      const newUsers = [...users, ...data.users];
       setUsers(newUsers);
       setFollowing(data.user_following);
-      setLoading(false);
 
-      // Paginacion
-      if (users.length >= data.total) {
+      if (newUsers.length >= data.total) {
         setMore(false);
+      } else {
+        setPage(nextPage + 1);
       }
     }
+
+    setLoading(false);
   };
 
   return (
@@ -48,11 +44,9 @@ export const People = () => {
 
       <UserList
         users={users}
-        getUsers={getUsers}
+        getUsers={getUsers} // no pasamos páginas desde UserList
         following={following}
         setFollowing={setFollowing}
-        page={page}
-        setPage={setPage}
         loading={loading}
         more={more}
       />

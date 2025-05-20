@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import {UserList} from "../user/UserList";
-import {GetFollowers} from "../servicies/follow/GetFollowers";
-
+import React, { useEffect, useState } from "react";
+import { GetFollowers } from "../servicies/follow/GetFollowers";
+import { useParams } from "react-router-dom";
+import { UserList } from "../user/UserList";
+import { GetUser } from "../../helpers/GetUser";
 
 export const Followers = () => {
   const [users, setUsers] = useState([]);
@@ -10,50 +10,63 @@ export const Followers = () => {
   const [more, setMore] = useState(true);
   const [following, setFollowing] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState({});
+
+  const params = useParams();
 
   useEffect(() => {
-    getUsers(1);
+    getUsers(1); // Primera página
+    getUserProfile();
   }, []);
-
-  const getUsers = async (nextPage = 1) => {
-    // Efecto de carga
+  
+  const getUsers = async (pageToLoad) => {
+    console.log("getUsers -> pageToLoad:", pageToLoad); // <-- Este
+    if (!more) return;
+  
     setLoading(true);
-
-    // Peticion para sacar usuarios
-    const data = await GetFollowers(nextPage);
-
-    // Estado para listarlos
-
-    if (data.follows && data.status == "success") {
-      let newUsers = data.follows;
-
-      if (users.length > 0) {
-        newUsers = [...users, ...data.follows];
-      }
+    const userid = params.userid;
+    const data = await GetFollowers(userid, pageToLoad);
+  
+    const cleanUsers = data.follows.map(f => f.user);
+  
+    if (cleanUsers.length && data.status === "success") {
+      const newUsers = [...users, ...cleanUsers];
       setUsers(newUsers);
-      setFollowing(data.user_following);
-      setLoading(false);
-
-      // Paginacion
-      if (users.length >= data.total) {
+      setFollowing(data.following);
+      setPage(pageToLoad); // ✅ Ahora sí, actualizamos el estado correctamente
+  
+      if (newUsers.length >= data.total) {
         setMore(false);
       }
     }
+  
+    setLoading(false);
   };
+  
+  const handleNextPage = () => {
+    const next = page + 1;
+    console.log("HandleNextPage -> next:", next); // <-- Este
+    getUsers(next); // 🚫 No seteamos `page` acá
+  };
+
+  const getUserProfile = async () => {
+    const data = await GetUser(params.userid);
+    setProfile(data);
+  };
+  
+  
 
   return (
     <>
       <header className="content__header">
-        <h1 className="content__title">Gente</h1>
+        <h1 className="content__title">Usuarios que siguen a {profile.name} {profile.surname}</h1>
       </header>
 
       <UserList
         users={users}
-        getUsers={getUsers}
+        getUsers={handleNextPage}
         following={following}
         setFollowing={setFollowing}
-        page={page}
-        setPage={setPage}
         loading={loading}
         more={more}
       />

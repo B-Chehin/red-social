@@ -4,6 +4,7 @@ import { PostFollow } from "../servicies/follow/PostFollow";
 import { PostUnfollow } from "../servicies/follow/PostUnfollow";
 import useAuth from "../../hooks/useAuth";
 import avatar from "../../assets/img/user.png";
+import { Link } from "react-router-dom";
 
 export const UserList = ({
   users,
@@ -12,8 +13,6 @@ export const UserList = ({
   setFollowing,
   loading,
   more,
-  page,
-  setPage,
 }) => {
   const { auth } = useAuth();
 
@@ -34,53 +33,52 @@ export const UserList = ({
   };
 
   const nextPage = () => {
-    let next = page + 1;
-    setPage(next);
-    getUsers(next);
-    console.log(following);
+    getUsers(); 
   };
   return (
     <>
       <div className="content__posts">
         {users.length > 0 ? (
           users.map((user) => (
-            <article className="posts__post" key={user._id}>
+            <article className="posts__post" key={user && user._id}>
               <div className="post__container">
                 <div className="post__image-user">
-                  <a href="#" className="post__image-link">
-                    {user.image != "default.png" && (
+                  <Link to={`/social/perfil/${user._id}`} className="post__image-link">
+                    {user &&
+                    user.image != "default.png" && (
                       <img
                         src={Global.url + "user/avatar/" + user.image}
                         className="post__user-image"
                         alt="Foto de perfil"
                       />
                     )}
-                    {user.image == "default.png" && (
+                    {user &&
+                    user.image == "default.png" && (
                       <img
                         src={avatar}
                         className="post__user-image"
                         alt="Foto de perfil"
                       />
                     )}
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="post__body">
                   <div className="post__user-info">
-                    <a href="#" className="user-info__name">
-                      {user.name} {user.surname}
-                    </a>
+                    <Link to={`/social/perfil/${user._id}`} className="user-info__name">
+                      {user && user.name} {user && user.surname}
+                    </Link>
                     <span className="user-info__divider"> | </span>
-                    <a href="#" className="user-info__create-date">
-                      {user.create_at}
-                    </a>
+                    <Link to={`/social/perfil/${user._id}`} className="user-info__create-date">
+                      {user && user.create_at}
+                    </Link>
                   </div>
 
-                  <h4 className="post__content">{user.bio}</h4>
+                  <h4 className="post__content">{user && user.bio}</h4>
                 </div>
               </div>
 
-              {user._id === auth._id ? (
+              {user && user._id === auth._id ? (
                 ""
               ) : (
                 <div className="post__buttons">
