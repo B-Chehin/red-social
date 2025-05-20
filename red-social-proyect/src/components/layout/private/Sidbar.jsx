@@ -10,6 +10,7 @@ export const Sidbar = () => {
   const { form, changed } = useForm({});
   const [stored, setStored] = useState("not_stored");
 
+
   const savePublication = async (e) => {
     e.preventDefault();
     // Recoger datos del form

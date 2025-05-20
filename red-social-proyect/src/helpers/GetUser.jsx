@@ -1,5 +1,5 @@
 import { Global } from './Global';
-export const GetUser = async (userid) => {
+export const GetUser = async (userid, setState) => {
     const token = localStorage.getItem("token");
 
     const request = await fetch(`${Global.url}user/profile/${userid}`, {
@@ -10,9 +10,10 @@ export const GetUser = async (userid) => {
         },
     });
     const data = await request.json();
-
+    
     if(data.status === "success"){
-        return data.user;
+        setState(data.user);
     }
-    return null;
+
+    return data;
 }
