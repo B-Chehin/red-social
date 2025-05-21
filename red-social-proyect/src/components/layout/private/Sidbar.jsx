@@ -64,12 +64,12 @@ export const Sidbar = () => {
       }
 
       // Reniciando form despues de subir
-      if(data.status === "success" && dataImage.status === "success"){
-        document.querySelector("#publication-form").reset();
-      }
+      //if(data.status === "success" && dataImage.status === "success"){
+      
+      //}
 
     }
-
+    document.querySelector("#publication-form").reset();
   };
 
   return (

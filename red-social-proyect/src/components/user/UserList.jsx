@@ -5,6 +5,7 @@ import { PostUnfollow } from "../servicies/follow/PostUnfollow";
 import useAuth from "../../hooks/useAuth";
 import avatar from "../../assets/img/user.png";
 import { Link } from "react-router-dom";
+import ReactTimeAgo from "react-time-ago";
 
 export const UserList = ({
   users,
@@ -70,7 +71,7 @@ export const UserList = ({
                     </Link>
                     <span className="user-info__divider"> | </span>
                     <Link to={`/social/perfil/${user._id}`} className="user-info__create-date">
-                      {user && user.create_at}
+                      <ReactTimeAgo date={user.created_at} locale="es" />
                     </Link>
                   </div>
 
