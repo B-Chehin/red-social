@@ -8,6 +8,7 @@ import { Global } from "../../helpers/Global";
 import { PostFollow } from "../servicies/follow/PostFollow";
 import { PostUnfollow } from "../servicies/follow/PostUnfollow";
 import { GetAllPublications } from "../servicies/publication/GetAllPublications";
+import { PublicationList } from "../servicies/publication/PublicationList";
 
 export const Profile = () => {
   const { auth } = useAuth();
@@ -77,14 +78,16 @@ export const Profile = () => {
       setMore(false);
     }    
 
+    if(data.pages <= 1){
+      setMore(false);
+    }
+
 
   };
 
-  const nextPage = () => {
-    let next = page + 1;
-    setPage(next);
-    getPublications(next);
-  };
+  
+
+  
 
   return (
     <>
@@ -172,69 +175,16 @@ export const Profile = () => {
         </div>
       </header>
 
-      <div className="content__posts">
-        {publications.map((publication) => (
-          <article className="posts__post" key={publication._id}>
-            <div className="post__container">
-              <div className="post__image-user">
-                <a href="#" className="post__image-link">
-                  <Link
-                    to={`/social/perfil/${publication.user._id}`}
-                    className="post__image-link"
-                  >
-                    {publication.user &&
-                      publication.user.image != "default.png" && (
-                        <img
-                          src={
-                            Global.url + "user/avatar/" + publication.user.image
-                          }
-                          className="post__user-image"
-                          alt="Foto de perfil"
-                        />
-                      )}
-                    {publication.user &&
-                      publication.user.image == "default.png" && (
-                        <img
-                          src={avatar}
-                          className="post__user-image"
-                          alt="Foto de perfil"
-                        />
-                      )}
-                  </Link>
-                </a>
-              </div>
+      <PublicationList 
+      publications={publications}
+      getPublications={getPublications}
+      more={more} 
+      setMore={setMore}
+      page={page}
+      setPage={setPage}
+      />
 
-              <div className="post__body">
-                <div className="post__user-info">
-                  <a href="#" className="user-info__name">
-                    {publication.user.name} {publication.user.surname}
-                  </a>
-                  <span className="user-info__divider"> | </span>
-                  <a href="#" className="user-info__create-date">
-                    {publication.create_at}
-                  </a>
-                </div>
-
-                <h4 className="post__content">{publication.text}</h4>
-              </div>
-            </div>
-            {publication.user._id === auth._id ? (
-              <div className="post__buttons">
-                <a href="#" className="post__button">
-                  <i className="fa-solid fa-trash-can"></i>
-                </a>
-              </div>
-            ) : (
-              ""
-            )}
-          </article>
-        ))}
-      </div>
-      {more ? (<div className="content__container-btn">
-        <button className="content__btn-more-post" onClick={nextPage}>
-          Ver mas publicaciones
-        </button>
-      </div>) : ""}
+      
       
       <br/>
     </>
