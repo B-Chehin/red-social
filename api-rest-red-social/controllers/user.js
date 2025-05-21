@@ -13,7 +13,7 @@ const jwt = require("../services/jwt");
 const followService = require("../services/followUsersIds");
 const follow = require("../models/follow");
 const Publication = require("../models/publication");
-
+const Validate = require("../helpers/Validate");
 
 const counters = async (req, res) => {
 
@@ -68,6 +68,9 @@ const register = async (req, res) => {
         status: "error",
       });
     }
+
+    // Validacion avanzada
+    Validate.Validate(params);
 
     // Verificar usuarios duplicados
     const users = await User.find({

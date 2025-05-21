@@ -15,6 +15,8 @@ import es from 'javascript-time-ago/locale/es';
 
 TimeAgo.addDefaultLocale(es);
 TimeAgo.addLocale(es);
+
+
 // Arrancando App de react
 createRoot(document.getElementById('root')).render(
     <App />
